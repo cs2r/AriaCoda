@@ -1,0 +1,147 @@
+
+// https://code.visualstudio.com/docs/editor/tasks
+// I recommend the simple "Tasks" extension for a really basic and easy way to run these tasks from buttons on the status bar
+
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build (Release)",
+      "windows": {
+        "command": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe",
+        "args": [
+          "visualc\\AriaCoda.sln",
+          "-p:Platform=x64",
+          "-p:Configuration=Release", "-maxCpuCount"
+        ],
+        "problemMatcher": ["$msCompile"]
+      },
+      "linux": {
+        "command": "make",
+        "type": "shell",
+        "args": [
+          "-j4"
+        ],
+        "problemMatcher": [
+          "$gcc"
+        ]
+      },
+      "presentation": {
+        "revealProblems": "onProblem",
+        "reveal": "always"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Build (Debug)",
+      "windows": {
+        "command": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe",
+        "args": [
+          "visualc\\AriaCoda.sln",
+          "-p:Platform=x64",
+          "-p:Configuration=Debug", "-maxCpuCount"
+        ],
+        "problemMatcher": ["$msCompile"]
+      },
+      "linux": {
+        "command": "make",
+        "type": "shell",
+        "args": [
+          "debug",
+          "-j4"
+        ],
+        "problemMatcher": [
+          "$gcc"
+        ]
+      },
+      "presentation": {
+        "revealProblems": "onProblem",
+        "reveal": "always"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "make examples/demo",
+      "linux": {
+        "command": "make",
+        "type": "shell",
+        "args": [
+          "examples/demo"
+        ],
+        "problemMatcher": [
+          "$gcc"
+        ],
+        "presentation": {
+          "reveal": "always"
+        },
+        "group": "build"
+      }
+    },
+    {
+      "label": "Clean",
+      "linux": {
+        "command": "make",
+        "type": "shell",
+        "args": [
+          "clean"
+        ],
+        "problemMatcher": [
+          "$gcc"
+        ],
+      },
+      "presentation": {
+        "reveal": "always"
+      },
+      "group": "build"
+    },
+
+    {
+      "label": "clang-tidy",
+      "command": "make",
+      "args": [
+        "clang-tidy"
+      ],
+      "type": "shell",
+      "presentation": {
+        "reveal": "always"
+      },
+      "group": "build",
+      "problemMatcher": [
+        "$gcc"
+      ]
+    },
+    {
+      "label": "cppcheck",
+      "command": "make",
+      "args": [
+        "cppcheck"
+      ],
+      "type": "shell",
+      "presentation": {
+        "reveal": "always"
+      },
+      "group": "build",
+      "problemMatcher": {
+        "fileLocation": [
+          "relative",
+          "${workspaceFolder}"
+        ],
+        "severity": "info",
+        "pattern": {
+          "kind": "location",
+          "regexp": "^(.+):(\\d+):(\\d+):\\s+(style|performance|warning|error|portability|information):\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "message": 5
+        }
+      }
+    }
+  ]
+}
